@@ -37235,9 +37235,12 @@ gui_union_rectangles (const Emacs_Rectangle *a, const Emacs_Rectangle *b,
 			    Initialization
  ***********************************************************************/
 
+#include "emacs-web-display.inc"
+
 void
 syms_of_xdisp (void)
 {
+  defsubr (&Semacs_web_native_display);
   Vwith_echo_area_save_vector = Qnil;
   staticpro (&Vwith_echo_area_save_vector);
 
