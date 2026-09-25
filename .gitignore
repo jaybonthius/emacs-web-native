@@ -162,6 +162,9 @@ lisp/subdirs.el
 # Dependencies.
 deps/
 
+# Local native build logs, isolated home, and validation artifacts.
+/build-artifacts/
+
 # Logs and temporaries.
 *.log
 *.tmp
