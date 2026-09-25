@@ -1285,6 +1285,8 @@ x_popup_menu_1 (Lisp_Object position, Lisp_Object menu)
     XSETFRAME (Vmenu_updating_frame, f);
   }
 
+  emacs_web_check_native_ui (f, "popup menu");
+
   /* Now parse the lisp menus.  */
   record_unwind_protect_void (unuse_menu_items);
 
@@ -1575,6 +1577,7 @@ for instance using the window manager, then this produces a quit and
   /* Note that xw_popup_dialog can call menu code, so
      Vmenu_updating_frame should be set (Bug#17891).  */
   eassume (f && FRAME_LIVE_P (f));
+  emacs_web_check_native_ui (f, "dialog");
   XSETFRAME (Vmenu_updating_frame, f);
 
   /* Force a redisplay before showing the dialog.  If a frame is created

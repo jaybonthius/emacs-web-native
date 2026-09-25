@@ -150,6 +150,36 @@ get_frame_param (struct frame *frame, Lisp_Object prop)
 }
 
 
+/* Browser-attached frames cannot interact with native modal widgets.  Keep
+   this check in C: menu keymaps and message-box bypass Lisp function advice.  */
+bool
+emacs_web_native_ui_blocked (struct frame *f)
+{
+  return !NILP (get_frame_param (f, Qemacs_web_native_ui_blocked));
+}
+
+void
+emacs_web_check_native_ui (struct frame *f, const char *kind)
+{
+  if (emacs_web_native_ui_blocked (f))
+    xsignal1 (Quser_error,
+              concat3 (build_string ("Emacs Web: native "),
+                       build_string (kind),
+                       build_string (" is not supported; use M-x instead")));
+}
+
+DEFUN ("emacs-web-native-ui-blocked-p", Femacs_web_native_ui_blocked_p,
+       Semacs_web_native_ui_blocked_p, 0, 1, 0,
+       doc: /* Return non-nil if FRAME blocks native menus and dialogs.
+FRAME defaults to the selected frame.  The frame parameter
+`emacs-web-native-ui-blocked' controls this policy.  Ordinary confirmation
+and file prompts use the minibuffer instead; explicit native UI requests
+signal `user-error' before entering the toolkit.  */)
+  (Lisp_Object frame)
+{
+  return emacs_web_native_ui_blocked (decode_live_frame (frame)) ? Qt : Qnil;
+}
+
 /* Return 1 if `frame-inhibit-implied-resize' is non-nil or fullscreen
    state of frame F would be affected by a vertical (horizontal if
    HORIZONTAL is true) resize.  PARAMETER is the symbol of the frame
@@ -6862,6 +6892,8 @@ iconify the top level frame instead.  */);
   defsubr (&Sframe_after_make_frame);
   defsubr (&Sredirect_frame_focus);
   defsubr (&Sframe_focus);
+  DEFSYM (Qemacs_web_native_ui_blocked, "emacs-web-native-ui-blocked");
+  defsubr (&Semacs_web_native_ui_blocked_p);
   defsubr (&Sframe_parameters);
   defsubr (&Sframe_parameter);
   defsubr (&Smodify_frame_parameters);

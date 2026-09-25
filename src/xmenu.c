@@ -478,6 +478,7 @@ DEFUN ("x-menu-bar-open-internal", Fx_menu_bar_open_internal, Sx_menu_bar_open_i
   struct x_display_info *dpyinfo = FRAME_DISPLAY_INFO (f);
 #endif
   Widget menubar;
+  emacs_web_check_native_ui (f, "menu bar");
   block_input ();
 
   if (FRAME_EXTERNAL_MENU_BAR (f))
@@ -586,10 +587,10 @@ If FRAME is nil or not given, use the selected frame.  */)
   (Lisp_Object frame)
 {
   GtkWidget *menubar;
-  struct frame *f;
+  struct frame *f = decode_window_system_frame (frame);
 
+  emacs_web_check_native_ui (f, "menu bar");
   block_input ();
-  f = decode_window_system_frame (frame);
 
   if (FRAME_EXTERNAL_MENU_BAR (f))
     set_frame_menubar (f, true);

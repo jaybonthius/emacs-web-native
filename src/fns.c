@@ -37,6 +37,7 @@ along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.  */
 #include "buffer.h"
 #include "intervals.h"
 #include "window.h"
+#include "frame.h"
 #include "puresize.h"
 #include "gnutls.h"
 
@@ -3548,7 +3549,8 @@ by a mouse, or by some window-system gesture, or via a menu.  */)
 	  || (NILP (last_nonmenu_event) && CONSP (last_input_event))
 	  || (val = find_symbol_value (Qfrom__tty_menu_p),
 	      (!NILP (val) && !BASE_EQ (val, Qunbound))))
-      && use_dialog_box)
+      && use_dialog_box
+      && !emacs_web_native_ui_blocked (SELECTED_FRAME ()))
     {
       Lisp_Object pane, menu, obj;
       redisplay_preserve_echo_area (4);

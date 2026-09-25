@@ -49,6 +49,10 @@ ImageMagick and Xft are not enabled by this Cairo configuration; no previously
 explicitly enabled image/font facility was removed. Tree-sitter grammars are
 not installed or downloaded by this build.
 
+## Native UI guard
+
+The source now also implements the frame-local `emacs-web-native-ui-blocked` policy and `emacs-web-native-ui-blocked-p` predicate. The display ABI and exporter are unchanged. Rebuild with the incremental command above and restart the serving process; reloading Elisp is not sufficient. The reproducible guard patch is `../emacs-web/native/emacs-30.2-ui.patch`. It rejects unsupported native popup menus/dialogs, X11 menu-bar activation and GTK file/font choosers before toolkit entry; ordinary confirmation/file prompts stay in Emacs's read loop. Only frames explicitly marked by the browser attachment change behavior. Validation and limits are recorded in `../emacs-web/test/native-ui-results.md`.
+
 ## Verify without user configuration
 
 ```sh

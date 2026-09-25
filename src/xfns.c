@@ -9400,6 +9400,7 @@ DEFUN ("x-file-dialog", Fx_file_dialog, Sx_file_dialog, 2, 5, 0,
   specpdl_ref count = SPECPDL_INDEX ();
 
   check_window_system (f);
+  emacs_web_check_native_ui (f, "file chooser");
 
   if (popup_activated ())
     error ("Trying to use a menu from within a menu-entry");
@@ -9621,6 +9622,7 @@ value of DIR as in previous invocations; this is standard MS Windows behavior.  
   char *cdef_file;
 
   check_window_system (f);
+  emacs_web_check_native_ui (f, "file chooser");
 
   if (popup_activated ())
     error ("Trying to use a menu from within a menu-entry");
@@ -9680,6 +9682,7 @@ nil, it defaults to the selected frame. */)
   char *default_name = NULL;
   specpdl_ref count = SPECPDL_INDEX ();
 
+  emacs_web_check_native_ui (f, "font chooser");
   if (popup_activated ())
     error ("Trying to use a menu from within a menu-entry");
   else

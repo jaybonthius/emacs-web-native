@@ -5173,6 +5173,8 @@ extern void store_frame_param (struct frame *, Lisp_Object, Lisp_Object);
 extern void store_in_alist (Lisp_Object *, Lisp_Object, Lisp_Object);
 extern Lisp_Object do_switch_frame (Lisp_Object, int, int, Lisp_Object);
 extern Lisp_Object get_frame_param (struct frame *, Lisp_Object);
+extern bool emacs_web_native_ui_blocked (struct frame *);
+extern void emacs_web_check_native_ui (struct frame *, const char *);
 extern void frames_discard_buffer (Lisp_Object);
 extern void init_frame_once (void);
 extern void syms_of_frame (void);

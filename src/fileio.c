@@ -6440,6 +6440,7 @@ before any other event (mouse or keypress) is handled.  */)
   if ((NILP (last_nonmenu_event) || CONSP (last_nonmenu_event))
       && use_dialog_box
       && use_file_dialog
+      && !emacs_web_native_ui_blocked (SELECTED_FRAME ())
       && window_system_available (SELECTED_FRAME ()))
     return Qt;
 #endif
